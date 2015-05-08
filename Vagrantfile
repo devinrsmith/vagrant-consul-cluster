@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 VAGRANTFILE_API_VERSION = '2'
-PAPER_PORT = '55555'
+PAPER_PATH = 'logs2.papertrailapp.com:55555'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "precise64"
@@ -15,7 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       d.run "logspout",
         image: "gliderlabs/logspout",
-        cmd: "syslog://logs2.papertrailapp.com:#{PAPER_PORT}",
+        cmd: "syslog://#{PAPER_PATH}",
         args: "-h n1 --restart=always --volume=/var/run/docker.sock:/tmp/docker.sock"
       
       d.run "consul",
@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       d.run "logspout",
         image: "gliderlabs/logspout",
-        cmd: "syslog://logs2.papertrailapp.com::#{PAPER_PORT}",
+        cmd: "syslog://#{PAPER_PATH}",
         args: "-h n2 --restart=always --volume=/var/run/docker.sock:/tmp/docker.sock"
 
       d.run "consul",
@@ -63,7 +63,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       d.run "logspout",
         image: "gliderlabs/logspout",
-        cmd: "syslog://logs2.papertrailapp.com::#{PAPER_PORT}",
+        cmd: "syslog://#{PAPER_PATH}",
         args: "-h n3 --restart=always --volume=/var/run/docker.sock:/tmp/docker.sock"
 
       d.run "consul", 
